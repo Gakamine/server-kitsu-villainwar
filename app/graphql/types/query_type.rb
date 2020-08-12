@@ -7,7 +7,7 @@ module Types
       description "Show current round information"
     end
     def current_round
-      Round.where("date_end >= ? AND date_start <= ? ",Time.now,Time.now).order("date_end asc")[0]
+      Round.where("date_end >= ? AND date_start <= ? ",Time.now,Time.now).order("round_number asc")[0]
     end
 
     field :get_results, [RoundType], null: false do

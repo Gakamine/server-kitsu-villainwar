@@ -8,5 +8,6 @@ module Types
         field :date_end, String, null:false
         field :results_opp1, Integer, null:true
         field :results_opp2, Integer, null:true
+        field :round_number, Integer, null:false
     end
 end 
