@@ -39,5 +39,5 @@ class UpdateJob
   end
 end
 
-Crono.perform(UpdateJob).every 60.seconds
+Crono.perform(UpdateJob).every 1.day, at: {hour: 23, min: 59}
 
