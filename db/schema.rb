@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_18_171726) do
+ActiveRecord::Schema.define(version: 2020_08_13_143136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,18 +45,27 @@ ActiveRecord::Schema.define(version: 2020_07_18_171726) do
     t.boolean "checked", default: false
   end
 
+  create_table "crono_jobs", id: :serial, force: :cascade do |t|
+    t.string "job_id", null: false
+    t.text "log"
+    t.datetime "last_performed_at"
+    t.boolean "healthy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true
+  end
+
   create_table "opponents", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "challonge_id"
   end
 
   create_table "rounds", force: :cascade do |t|
     t.integer "round_number", null: false
     t.bigint "opp_1_id"
     t.bigint "opp_2_id"
-    t.datetime "date_start", null: false
-    t.datetime "date_end", null: false
-    t.integer "results_opp1"
-    t.integer "results_opp2"
+    t.integer "challonge_id"
+    t.date "date"
     t.index ["opp_1_id"], name: "index_rounds_on_opp_1_id"
     t.index ["opp_2_id"], name: "index_rounds_on_opp_2_id"
   end

@@ -16,7 +16,7 @@ class Mutations::SubmitVote < Mutations::BaseMutation
             userid = JSON.parse(response.body)['data'][0]['id']
             #The user is authenticated
             
-            currentRound = Round.where("date_end >= ? AND date_start <= ? ",Time.now,Time.now).order("date_end asc")[0].id
+            currentRound = Round.where("date = ?",Time.now)[0].id
 
             if(Round.find(currentRound).opp_1_id.id==opp_id || Round.find(currentRound).opp_2_id.id==opp_id)
                 vote = Vote.new(user_id: userid, opponents_id: opp_id, rounds_id: currentRound)
@@ -51,7 +51,7 @@ class Mutations::SubmitVote < Mutations::BaseMutation
 
     def anticheat(response,userid)
         verified_email=!JSON.parse(response.body)['data'][0]['attributes']['confirmed']
-        date_creation=JSON.parse(response.body)['data'][0]['attributes']['createdAt']>Round.order('date_start').limit(1)[0].date_start
+        date_creation=Date.parse(JSON.parse(response.body)['data'][0]['attributes']['createdAt'])>Round.order('date').limit(1)[0].date
         number_entries=!(JSON.parse(response.body)['data'][0]['attributes']['ratingsCount']>10)
         pfp=JSON.parse(response.body)['data'][0]['attributes']['avatar']==nil
         if verified_email || date_creation || number_entries || pfp
