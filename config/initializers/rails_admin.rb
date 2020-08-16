@@ -18,6 +18,6 @@ RailsAdmin.config do |config|
   end
 
   config.navigation_static_links = {
-    'Filtered blacklist' => '../admin/blacklist?model_name=blacklist&f[checked][19532][v]=false'
+    'Filtered blacklist' => '/admin/blacklist?model_name=blacklist&f[checked][19532][v]=false'
   }
 end

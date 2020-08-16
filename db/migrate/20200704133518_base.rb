@@ -23,6 +23,7 @@ class Base < ActiveRecord::Migration[6.0]
 
     create_table :blacklist do |t|
       t.integer :user_id,           null: false
+      t.string  :username,          null: false
       t.boolean :acc_too_recent,    default: false
       t.boolean :acc_not_enough_entries, default: false
       t.boolean :acc_non_verified_email, default: false

@@ -53,9 +53,10 @@ class Mutations::SubmitVote < Mutations::BaseMutation
         verified_email=!JSON.parse(response.body)['data'][0]['attributes']['confirmed']
         date_creation=Date.parse(JSON.parse(response.body)['data'][0]['attributes']['createdAt'])>Round.order('date').limit(1)[0].date
         number_entries=!(JSON.parse(response.body)['data'][0]['attributes']['ratingsCount']>10)
+        username=JSON.parse(response.body)['data'][0]['attributes']['name']
         pfp=JSON.parse(response.body)['data'][0]['attributes']['avatar']==nil
         if verified_email || date_creation || number_entries || pfp
-            blacklisted=Blacklist.new(user_id: userid, acc_non_verified_email: verified_email, acc_too_recent: date_creation, acc_not_enough_entries: number_entries, acc_default_pfp: pfp)
+            blacklisted=Blacklist.new(user_id: userid, username: username, acc_non_verified_email: verified_email, acc_too_recent: date_creation, acc_not_enough_entries: number_entries, acc_default_pfp: pfp)
             blacklisted.save
         end
     end

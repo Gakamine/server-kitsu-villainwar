@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_143136) do
+ActiveRecord::Schema.define(version: 2020_08_14_100053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_143136) do
 
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.string "username", null: false
     t.boolean "acc_too_recent", default: false
     t.boolean "acc_not_enough_entries", default: false
     t.boolean "acc_non_verified_email", default: false
@@ -53,6 +54,32 @@ ActiveRecord::Schema.define(version: 2020_08_13_143136) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true
+  end
+
+  create_table "fantasyleague_votes", force: :cascade do |t|
+    t.string "username", null: false
+    t.integer "user_id", null: false
+    t.integer "score", default: 0
+    t.bigint "villain_1_id", null: false
+    t.bigint "villain_2_id", null: false
+    t.bigint "villain_3_id", null: false
+    t.bigint "villain_4_id", null: false
+    t.bigint "villain_5_id", null: false
+    t.bigint "villain_6_id", null: false
+    t.bigint "villain_7_id", null: false
+    t.bigint "villain_8_id", null: false
+    t.bigint "villain_9_id", null: false
+    t.bigint "best_villain_id", null: false
+    t.index ["best_villain_id"], name: "index_fantasyleague_votes_on_best_villain_id"
+    t.index ["villain_1_id"], name: "index_fantasyleague_votes_on_villain_1_id"
+    t.index ["villain_2_id"], name: "index_fantasyleague_votes_on_villain_2_id"
+    t.index ["villain_3_id"], name: "index_fantasyleague_votes_on_villain_3_id"
+    t.index ["villain_4_id"], name: "index_fantasyleague_votes_on_villain_4_id"
+    t.index ["villain_5_id"], name: "index_fantasyleague_votes_on_villain_5_id"
+    t.index ["villain_6_id"], name: "index_fantasyleague_votes_on_villain_6_id"
+    t.index ["villain_7_id"], name: "index_fantasyleague_votes_on_villain_7_id"
+    t.index ["villain_8_id"], name: "index_fantasyleague_votes_on_villain_8_id"
+    t.index ["villain_9_id"], name: "index_fantasyleague_votes_on_villain_9_id"
   end
 
   create_table "opponents", force: :cascade do |t|
@@ -86,6 +113,16 @@ ActiveRecord::Schema.define(version: 2020_08_13_143136) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "best_villain_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_1_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_2_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_3_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_4_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_5_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_6_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_7_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_8_id"
+  add_foreign_key "fantasyleague_votes", "opponents", column: "villain_9_id"
   add_foreign_key "rounds", "opponents", column: "opp_1_id"
   add_foreign_key "rounds", "opponents", column: "opp_2_id"
   add_foreign_key "votes", "opponents", column: "opponents_id"
