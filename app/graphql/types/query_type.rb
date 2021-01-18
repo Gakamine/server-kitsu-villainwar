@@ -22,22 +22,12 @@ module Types
       if round!=nil
         if defined?(JSON.parse(response.body)['data'][0]['id'])
           if Vote.where(rounds_id: round.id, user_id: JSON.parse(response.body)['data'][0]['id']).count >= 1
-            return 1
+            return Vote.where(rounds_id: round.id, user_id: JSON.parse(response.body)['data'][0]['id'])[0]['opponents_id']
           else
-            return 0
+            return ''
           end
         else
-          return 0
-        end
-      else
-        if defined?(JSON.parse(response.body)['data'][0]['id'])
-          if FantasyleagueVote.where(user_id: JSON.parse(response.body)['data'][0]['id']).count >= 1
-            return 1
-          else
-            return 0
-          end
-        else
-          return 0
+          return ''
         end
       end
     end
